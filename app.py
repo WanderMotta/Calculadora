@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template_string, flash
 from dataclasses import dataclass
 from typing import Optional, Tuple
+import os
 
 app = Flask(__name__)
 app.secret_key = 'calculadora_precificacao_2024'  # Para usar flash messages
@@ -489,6 +490,12 @@ def index():
     
     return render_template_string(HTML, resultado=resultado)
 
+@app.route('/health')
+def health_check():
+    """Rota para verificar se a aplicação está funcionando"""
+    return {'status': 'OK', 'message': 'Calculadora de Precificação funcionando!'}, 200
+
 if __name__ == '__main__':
-    # Rodar sem debug para evitar erro de _multiprocessing
-    app.run(debug=False)
+    # Configuração para produção - aceita conexões de qualquer IP
+    port = int(os.environ.get('PORT', 3000))
+    app.run(host='0.0.0.0', port=port, debug=False)
