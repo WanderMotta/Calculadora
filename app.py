@@ -494,8 +494,3 @@ def index():
 def health_check():
     """Rota para verificar se a aplicação está funcionando"""
     return {'status': 'OK', 'message': 'Calculadora de Precificação funcionando!'}, 200
-
-if __name__ == '__main__':
-    # Configuração para produção - aceita conexões de qualquer IP
-    port = int(os.environ.get('PORT', 3000))
-    app.run(host='0.0.0.0', port=port, debug=False)
