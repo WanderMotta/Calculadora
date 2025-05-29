@@ -5,7 +5,8 @@ FROM python:3.11-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     FLASK_APP=app.py \
-    FLASK_ENV=production
+    FLASK_ENV=production \
+    PORT=3000
 
 # Criar diretório de trabalho
 WORKDIR /app
@@ -33,5 +34,5 @@ USER appuser
 # Expor a porta que o Coolify espera
 EXPOSE 3000
 
-# Comando para iniciar a aplicação com Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:3000", "--workers", "2", "--timeout", "60", "--keepalive", "2", "app:app"] 
+# Comando para iniciar a aplicação com Gunicorn usando arquivo de configuração
+CMD ["gunicorn", "--config", "gunicorn.conf.py", "app:app"] 
